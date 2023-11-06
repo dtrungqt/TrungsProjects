@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getDateFn } from "@/utils/transformDateFnList";
 
+/*
 const currentTime = new Date();
 const sevenDaysLater = new Date(
   currentTime.getTime() + 6 * 24 * 60 * 60 * 1000
@@ -8,12 +9,14 @@ const sevenDaysLater = new Date(
 
 const currentTimeFormated = getDateFn(currentTime);
 const sevenDaysLaterFormated = getDateFn(sevenDaysLater);
-
+*/
 const initialUserState = {
-  //   dateArrive: currentTime,
-  //   returnDate: new Date(currentTime.getTime() + 7 * 24 * 60 * 60 * 1000), // Cộng thêm 7 ngày - Trong JS thoi gian tinh bang ms
+  /*
   dateArrive: currentTimeFormated,
   returnDate: sevenDaysLaterFormated, // Cộng thêm 7 ngày
+  */
+  dateArrive: "",
+  returnDate: "",
   name: "",
   phone: "",
   email: "",

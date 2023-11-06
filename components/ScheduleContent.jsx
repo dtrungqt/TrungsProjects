@@ -38,14 +38,43 @@ function ScheduleContent() {
   };
   // console.log(statusBtn);
   // console.log(statusRemoveIcon);
+  /*
   const dateArrive = new Date(userData.dateArrive);
   const returnDate = new Date(userData.returnDate);
   const dateArriveFormated = getDayMonthYearFn(dateArrive);
   const returnDateFormated = getDayMonthYearFn(returnDate);
   const arriveHour = getHourMinuteFn(dateArrive);
   const returnHour = getHourMinuteFn(returnDate);
+*/
 
+  //
+  let dateArrive;
+  let returnDate;
+  // let dateArriveFormated;
+  // let returnDateFormated;
+  // let arriveHour;
+
+  const [dateArriveFormated, setDateArriveFormated] = useState();
+  const [returnDateFormated, setReturnDateFormated] = useState();
+  const [arriveHour, setArriveHour] = useState();
+
+  //
   useEffect(() => {
+    //
+    if (userData.dateArrive === "") {
+      dateArrive = new Date();
+      returnDate = new Date(dateArrive.getTime() + 6 * 24 * 60 * 60 * 1000); // Cộng thêm 6 ngày - Trong JS thoi gian tinh bang ms
+    } else {
+      dateArrive = new Date(userData.dateArrive);
+      returnDate = new Date(userData.returnDate);
+    }
+    // dateArriveFormated = getDayMonthYearFn(dateArrive);
+    // returnDateFormated = getDayMonthYearFn(returnDate);
+    // arriveHour = getHourMinuteFn(dateArrive);
+    setDateArriveFormated(getDayMonthYearFn(dateArrive));
+    setReturnDateFormated(getDayMonthYearFn(returnDate));
+    setArriveHour(getHourMinuteFn(dateArrive));
+    //
     const period = returnDate - dateArrive;
 
     const differentDay = millisecondToDay(period);
@@ -97,6 +126,7 @@ function ScheduleContent() {
             </h3>
           </div>
         </VerticalTimelineElement>
+        {/* LỊCH TRÌNH TỪ NGÀY 1 ĐẾN NGÀY CUỐI  */}
         {scheduleDataUpdate.map((data, i) => {
           const indexParent = i;
           let displayBtn = "hidden";
@@ -117,9 +147,6 @@ function ScheduleContent() {
               }
               iconClassName={"bg-orange"}
             >
-              {/* <h2 className="bg-orange px-3 py-4 rounded-[0.25em]">{`Ngày: ${
-                indexParent + 1
-              }`}</h2> */}
               <h2 className="bg-orange px-3 py-4 rounded-[0.25em]">{`Ngày ${
                 data.day
               }: (${data.date}) ${
@@ -132,35 +159,45 @@ function ScheduleContent() {
                   setStatusBtn("");
                 }}
               >
-                {data.todo.map((todo, i) => {
+                {data.todo.map((activity, index) => {
                   let displayRemoveIcon = "hidden";
-                  // console.log(statusRemoveIcon);
-                  // console.log(i);
                   if (statusRemoveIcon) {
                     if (
-                      Number(statusRemoveIcon) === i &&
+                      Number(statusRemoveIcon) === index &&
                       displayBtn === "flex"
                     ) {
                       displayRemoveIcon = "inline";
                     }
                   }
+                  // ĐANG LÀM
+                  /////////////////////////////////////////////////////////////////////////////////////////////
+                  const removeActivityHandler = () => {
+                    const scheduleDataCurrent = scheduleDataUpdate;
+                    scheduleDataCurrent[indexParent].todo.splice(index, 1);
+                    setScheduleDataUpdate(scheduleDataCurrent);
+
+                    setStatusRemoveIcon(""); // nếu không có lệnh này thì chỉ khi di chuyển chuột ra khỏi dấu X thì Giao diện ms được cập nhật
+                    // console.log(scheduleDataCurrent[indexParent].todo);
+                    // console.log(activity, index, indexParent);
+                  };
 
                   return (
                     <h3
-                      key={i}
-                      id={i}
+                      key={index}
+                      id={index}
                       className={`py-2 selected-${indexParent}`}
                       onMouseOver={mouseEnterRemoveIconHandler}
                       onMouseOut={() => {
                         setStatusRemoveIcon("");
                       }}
                     >
-                      {todo}
+                      {activity}
                       <span
-                        id={i}
+                        id={index}
                         className={`ml-2 text-black font-bold cursor-pointer font-sans selected-${indexParent} ${displayRemoveIcon}`}
+                        onClick={removeActivityHandler}
                       >
-                        X{/* <FontAwesomeIcon id={i} icon={faXmark} /> */}
+                        X
                       </span>
                     </h3>
                   );
