@@ -1,0 +1,21 @@
+.vertical-timeline::before {
+  background-color: #ef5a39 !important;
+}
+
+.vertical-timeline-element-content-arrow {
+  border-right: 7px solid #ef5a39 !important;
+}
+
+.vertical-timeline-element-content {
+  padding: 0px !important;
+  //   border-radius: 0.25rem !important;
+}
+
+.vertical-timeline-element-content h2 {
+  color: white !important;
+  font-weight: 700;
+}
+
+.vertical-timeline {
+  max-width: 100% !important;
+}

@@ -1,0 +1,24 @@
+.page-footer h2.page-footer__header::after {
+  content: "";
+  @apply block h-[2px] w-[calc(100%-150px)] bg-light-grey absolute bottom-1 right-0;
+}
+.page-footer__title {
+  @apply text-base font-semibold;
+}
+
+.page-footer__link {
+  @apply relative;
+}
+
+a.page-footer__link:hover {
+  @apply text-orange;
+}
+
+a.page-footer__link::after {
+  content: "";
+  @apply hidden h-[1px] w-full absolute bottom-0 left-0 bg-orange;
+
+  &:hover {
+    @apply block;
+  }
+}

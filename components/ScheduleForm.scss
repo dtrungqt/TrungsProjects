@@ -1,0 +1,11 @@
+.schedule-form__field {
+  @apply flex flex-col gap-2;
+}
+
+.schedule-form__field__span {
+  @apply text-red-600 text-xs italic;
+}
+
+.schedule-form__input {
+  @apply rounded-md border-[1px] border-solid border-light-grey px-3 py-2;
+}
