@@ -8,7 +8,7 @@ function AddForm({ displayStatus, onAddActivity, addedClass }) {
     //validate input
     if (textareaValue.trim() === "") return;
 
-    console.log(textareaValue);
+    // console.log(textareaValue);
     onAddActivity(textareaValue);
     setTextareaValue("");
   };

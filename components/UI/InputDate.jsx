@@ -9,6 +9,7 @@ function InputDate(props) {
     onInputTextBlur,
     inputTextValue,
     hasError,
+    errorDayChoosen,
   } = props;
 
   let errorMessage = "";
@@ -23,6 +24,14 @@ function InputDate(props) {
     errorMessage = "Nhập giá trị hợp lệ!";
   }
 
+  if (errorDayChoosen) {
+    if (labelName === "Ngày đến") {
+      errorMessage = "Ngày đến phải nhỏ hơn Ngày đi!";
+    } else {
+      errorMessage = "Ngày đi phải lớn hơn Ngày đến!";
+    }
+  }
+
   return (
     <div className="schedule-form__field">
       <label>
@@ -32,7 +41,9 @@ function InputDate(props) {
       {inputType === "text" && (
         <input
           type={inputType}
-          className={`schedule-form__input ${hasError ? "input--warning" : ""}`}
+          className={`schedule-form__input ${
+            hasError || errorDayChoosen ? "input--warning" : ""
+          }`}
           onChange={onInputTextChange}
           onBlur={onInputTextBlur}
           value={inputTextValue}
@@ -42,13 +53,16 @@ function InputDate(props) {
         <input
           type={inputType}
           min={minNumber}
-          className={`schedule-form__input ${hasError ? "input--warning" : ""}`}
+          className={`schedule-form__input ${
+            hasError || errorDayChoosen ? "input--warning" : ""
+          }`}
           onChange={onInputTextChange}
           onBlur={onInputTextBlur}
           value={inputTextValue}
         />
       )}
       {hasError && <p className="text--warning">{errorMessage}</p>}
+      {errorDayChoosen && <p className="text--warning">{errorMessage}</p>}
     </div>
   );
 }

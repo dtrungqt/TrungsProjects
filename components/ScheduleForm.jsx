@@ -84,6 +84,7 @@ function ScheduleForm() {
   } = useInput(positiveNumberValidateFn);
 
   const [enteredLocation, setEnteredLocation] = useState("Đà Nẵng");
+  const [errorDayChoosen, setErrorDayChoosen] = useState(false);
 
   const isShow = useSelector((state) => state.schedule.scheduleStatus);
 
@@ -116,6 +117,16 @@ function ScheduleForm() {
       return;
     }
 
+    //Khi ngày đến < Ngày đi
+    const dateArrive = new Date(enteredDateArrive);
+    const returnDate = new Date(enteredReturnDate);
+    const period = returnDate - dateArrive;
+
+    if (period < 0) {
+      setErrorDayChoosen(true);
+      return;
+    }
+
     dispatch(
       userActions.setUserData({
         dateArrive: enteredDateArrive,
@@ -130,6 +141,7 @@ function ScheduleForm() {
     );
 
     //CLEAR INPUT FIELDS
+    setErrorDayChoosen(false);
   };
 
   return (
@@ -152,6 +164,7 @@ function ScheduleForm() {
             onInputTextBlur={dateArriveInputBlurHandler}
             inputTextValue={enteredDateArrive}
             hasError={dateArriveInputHasError}
+            errorDayChoosen={errorDayChoosen}
           />
           <InputDate
             labelName="Ngày đi"
@@ -162,6 +175,7 @@ function ScheduleForm() {
             onInputTextBlur={returnDateInputBlurHandler}
             inputTextValue={enteredReturnDate}
             hasError={returnDateInputHasError}
+            errorDayChoosen={errorDayChoosen}
           />
           <InputText
             labelName="Họ và tên"
@@ -171,10 +185,6 @@ function ScheduleForm() {
             inputTextValue={enteredName}
             hasError={nameInputHasError}
           />
-          {/* <div className="schedule-form__field">
-            <label>Họ và tên</label>
-            <input className="schedule-form__input" type="text" />
-          </div> */}
           <InputText
             labelName="Số điện thoại"
             inputName="phoneNumber"
