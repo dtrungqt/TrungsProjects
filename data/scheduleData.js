@@ -2,7 +2,9 @@ const scheduleData = [
   {
     id: 1,
     todo: [
-      "Thăm Ngũ Hành Sơn - Hội An. Ăn tối tại Hội An (tour trọn gói giá 450k",
+      "Thăm Ngũ Hành Sơn - Hội An. Ăn tối tại Hội An (tour trọn gói giá 450k)",
+      "Thăm Ngũ Hành Sơn - Hội An. Ăn tối tại Hội An (tour trọn gói giá 450k)",
+      "Thăm Ngũ Hành Sơn - Hội An. Ăn tối tại Hội An (tour trọn gói giá 450k)",
     ],
   },
   {

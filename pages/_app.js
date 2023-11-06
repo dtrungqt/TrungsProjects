@@ -13,7 +13,7 @@ export default function App({ Component, pageProps }) {
   return (
     <>
       <Head>
-        <title>Bay di dau - Nguyen Dinh Trung</title>
+        <title>Baydidau - Nguyen Dinh Trung</title>
       </Head>
       <Provider store={store}>
         <Component {...pageProps} />

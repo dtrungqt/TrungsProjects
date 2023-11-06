@@ -140,7 +140,7 @@ function ScheduleForm() {
           <h1 className="text-lg font-semibold">LẬP LỊCH TRÌNH</h1>
         </header>
         <form
-          className="schedule-form text-strong-grey grid grid-cols-6 px-4 py-5 gap-x-5 gap-y-4"
+          className="schedule-form text-strong-grey grid grid-cols-2 gap-x-3 gap-y-4 auto-rows-[minmax(90px,_1fr)] md:grid-cols-3 lg:grid-cols-4 lg:gap-x-5 lg:gap-y-4 xl:grid-cols-6 px-4 py-5"
           onSubmit={submitHandler}
         >
           <InputDate
@@ -212,12 +212,7 @@ function ScheduleForm() {
             inputTextValue={enteredDelayHour}
             hasError={delayHourInputHasError}
           />
-          {/* <div className="schedule-form__field">
-            <label>
-              Giờ Delay <span className="schedule-form__field__span">(H)</span>
-            </label>
-            <input className="schedule-form__input" type="number" min="0" />
-          </div> */}
+
           <div className="schedule-form__field">
             <label htmlFor="position">Chọn địa điểm</label>
             <select
@@ -233,7 +228,7 @@ function ScheduleForm() {
             </select>
           </div>
           <Button
-            className={`w-[100px] h-[32px] bg-pink self-end ${
+            className={`w-[110px] h-[40px] bg-pink md:self-center lg:self-start xl:self-center xl:justify-self-center ${
               !formIsValid ? "cursor-no-drop" : "btn--trans1"
             }`}
             disabled={!formIsValid ? "true" : "false"}

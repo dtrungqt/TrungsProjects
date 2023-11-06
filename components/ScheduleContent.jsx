@@ -10,22 +10,26 @@ import {
   faPlaneArrival,
   faStar,
 } from "@fortawesome/free-solid-svg-icons";
-import Button from "./UI/Button";
-
-import scheduleData from "@/data/scheduleData";
-import "react-vertical-timeline-component/style.min.css";
 import {
   getDayMonthYearFn,
   getHourMinuteFn,
   millisecondToDay,
 } from "@/utils/transformDateFnList";
 
+import Button from "./UI/Button";
+import scheduleData from "@/data/scheduleData";
+import AddForm from "./UI/AddForm";
+import "react-vertical-timeline-component/style.min.css";
+
 function ScheduleContent() {
   const [statusBtn, setStatusBtn] = useState("");
   const [statusRemoveIcon, setStatusRemoveIcon] = useState("");
+  const [statusPlusIcon, setStatusPlusIcon] = useState("");
   const userData = useSelector((state) => state.user);
   const scheduleStatus = useSelector((state) => state.schedule.scheduleStatus);
-  const [scheduleDataUpdate, setScheduleDataUpdate] = useState(scheduleData);
+  const [scheduleDataUpdate, setScheduleDataUpdate] = useState([]);
+  const [statusAddForm, setStatusAddForm] = useState("");
+  const [displayAddFormToggle, setDisplayAddFormToggle] = useState(false);
 
   const mouseEnterBtnHandler = (e) => {
     // console.log(e.target.parentElement.className);
@@ -36,23 +40,21 @@ function ScheduleContent() {
     // console.log(e);
     setStatusRemoveIcon(e.target.id);
   };
-  // console.log(statusBtn);
-  // console.log(statusRemoveIcon);
-  /*
-  const dateArrive = new Date(userData.dateArrive);
-  const returnDate = new Date(userData.returnDate);
-  const dateArriveFormated = getDayMonthYearFn(dateArrive);
-  const returnDateFormated = getDayMonthYearFn(returnDate);
-  const arriveHour = getHourMinuteFn(dateArrive);
-  const returnHour = getHourMinuteFn(returnDate);
-*/
 
-  //
+  const mouseEnterPlusIconHandler = (e) => {
+    // console.log(e.target.id);
+    setStatusPlusIcon(e.target.id);
+  };
+
+  const displayAddFormHandler = (e) => {
+    setStatusAddForm(e.target.id);
+    // if (e.target.id !== "") {
+    setDisplayAddFormToggle((prev) => !prev);
+    // }
+  };
+
   let dateArrive;
   let returnDate;
-  // let dateArriveFormated;
-  // let returnDateFormated;
-  // let arriveHour;
 
   const [dateArriveFormated, setDateArriveFormated] = useState();
   const [returnDateFormated, setReturnDateFormated] = useState();
@@ -68,9 +70,7 @@ function ScheduleContent() {
       dateArrive = new Date(userData.dateArrive);
       returnDate = new Date(userData.returnDate);
     }
-    // dateArriveFormated = getDayMonthYearFn(dateArrive);
-    // returnDateFormated = getDayMonthYearFn(returnDate);
-    // arriveHour = getHourMinuteFn(dateArrive);
+
     setDateArriveFormated(getDayMonthYearFn(dateArrive));
     setReturnDateFormated(getDayMonthYearFn(returnDate));
     setArriveHour(getHourMinuteFn(dateArrive));
@@ -105,6 +105,8 @@ function ScheduleContent() {
     setScheduleDataUpdate(scheduleDataFormated);
   }, [userData.dateArrive, userData.returnDate]);
 
+  // console.log(scheduleDataUpdate);
+
   return (
     <div className={`${!scheduleStatus ? "pt-16" : ""}`}>
       <VerticalTimeline>
@@ -130,13 +132,37 @@ function ScheduleContent() {
         {scheduleDataUpdate.map((data, i) => {
           const indexParent = i;
           let displayBtn = "hidden";
+          let displayPlusIcon = "hidden";
+          let displayAddForm = false;
 
+          if (statusAddForm && Number(statusAddForm) === indexParent) {
+            displayAddForm = displayAddFormToggle;
+          }
+
+          // console.log(displayAddForm);
           //kiểm tra chính xác đối tượng được mouseOver vào là đối tượng có class selected nào, để chỉ hiển thị BTN ở đối tượng đó - Nếu không kiểm tra như này thì BTN sẽ được hiển thị ở tất cả đối tượng
           if (statusBtn && typeof statusBtn === "string") {
             if (statusBtn.includes(`selected-${indexParent}`)) {
               displayBtn = "flex";
             }
           }
+
+          if (statusPlusIcon && Number(statusPlusIcon) === indexParent) {
+            displayPlusIcon = "block";
+          }
+
+          const addActivityHandler = (activity) => {
+            const scheduleDataCurrent = JSON.parse(
+              JSON.stringify(scheduleDataUpdate)
+            );
+            scheduleDataCurrent[indexParent].todo.push(activity);
+            setScheduleDataUpdate(scheduleDataCurrent);
+
+            // ẩn Form
+            // setStatusAddForm("");
+            setStatusAddForm("");
+            setDisplayAddFormToggle((prev) => !prev);
+          };
 
           return (
             <VerticalTimelineElement
@@ -147,13 +173,29 @@ function ScheduleContent() {
               }
               iconClassName={"bg-orange"}
             >
-              <h2 className="bg-orange px-3 py-4 rounded-[0.25em]">{`Ngày ${
-                data.day
-              }: (${data.date}) ${
-                i === 0 ? `Khung giờ: ${arriveHour} - 21h00` : ""
-              }`}</h2>
+              <header
+                className="bg-orange px-3 py-4 rounded-[0.25em] flex justify-between items-center"
+                id={indexParent}
+                onMouseOver={mouseEnterPlusIconHandler}
+                onMouseOut={() => {
+                  setStatusPlusIcon("");
+                }}
+              >
+                <h2 id={indexParent}>{`Ngày ${data.day}: (${data.date}) ${
+                  i === 0 ? `Khung giờ: ${arriveHour} - 21h00` : ""
+                }`}</h2>
+                <img
+                  // src="plus.svg"
+                  // alt="plus icon"
+                  src={`${displayAddFormToggle ? "xmark.svg" : "plus.svg"}`}
+                  alt="plus icon"
+                  id={indexParent}
+                  className={`cursor-pointer ${displayPlusIcon}`}
+                  onClick={displayAddFormHandler}
+                />
+              </header>
               <div
-                className={`pl-2 pr-3 text-grey selected-${indexParent}`}
+                className={`min-h-[175px] pl-2 pr-3 text-grey selected-${indexParent}`}
                 onMouseOver={mouseEnterBtnHandler}
                 onMouseOut={() => {
                   setStatusBtn("");
@@ -169,10 +211,11 @@ function ScheduleContent() {
                       displayRemoveIcon = "inline";
                     }
                   }
-                  // ĐANG LÀM
-                  /////////////////////////////////////////////////////////////////////////////////////////////
+
                   const removeActivityHandler = () => {
-                    const scheduleDataCurrent = scheduleDataUpdate;
+                    const scheduleDataCurrent = JSON.parse(
+                      JSON.stringify(scheduleDataUpdate)
+                    );
                     scheduleDataCurrent[indexParent].todo.splice(index, 1);
                     setScheduleDataUpdate(scheduleDataCurrent);
 
@@ -202,6 +245,12 @@ function ScheduleContent() {
                     </h3>
                   );
                 })}
+                <AddForm
+                  displayStatus={displayAddForm}
+                  // displayStatus={displayAddFormToggle}
+                  onAddActivity={addActivityHandler}
+                  addedClass={`selected-${indexParent}`}
+                />
                 <footer
                   className={`justify-end pt-3 gap-2 pb-5 selected-${i} ${displayBtn}`}
                 >

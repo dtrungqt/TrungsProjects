@@ -1,16 +1,17 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSquareFacebook } from "@fortawesome/free-brands-svg-icons";
+import AnchorTag from "./UI/AnchorTag";
 
 function Footer() {
   return (
     <footer className="page-footer bg-white w-full border-t-2 border-solid border-light-orange ">
-      <section className="container page-footer__first pb-8">
+      <section className="container-wrap page-footer__first pb-8">
         <h2 className="page-footer__header font-semibold text-strong-grey my-8 relative">
           Thông tin và chính sách
         </h2>
-        <div className="page-footer__body flex justify-between">
-          <div>
-            <div className="">
+        <div className="page-footer__body flex flex-col gap-10 lg:flex-row lg:justify-between">
+          <div className="flex flex-col gap-2">
+            <div>
               <img src="./images/logo_.jpg" className="w-[150px]" />
             </div>
             <h6>Văn phòng : Số 40 Mỹ Khê 7, Phước Mỹ, Sơn Trà, Đà Nẵng</h6>
@@ -19,48 +20,24 @@ function Footer() {
             <h6>Địa chỉ tên miền: baydidau.vn</h6>
           </div>
           <div className="">
-            <h2 className="page-footer__title mb-5">QUY ĐỊNH</h2>
-            <div className="h-[20px]">
-              <a className="page-footer__link" href="#" target="_blank">
-                Chính sách và quy định chung
-              </a>
-            </div>
-            <div className="h-[20px]">
-              <a className="page-footer__link" href="#" target="_blank">
-                Chính sách cộng tác viên
-              </a>
-            </div>
-            <div className="h-[20px]">
-              <a className="page-footer__link" href="#" target="_blank">
-                Quy định thanh toán
-              </a>
-            </div>
-            <div className="h-[20px]">
-              <a className="page-footer__link" href="#" target="_blank">
-                Quy định về xác định thông tin đặt vé
-              </a>
-            </div>
-            <div className="h-[20px]">
-              <a className="page-footer__link" href="#" target="_blank">
-                Chính sách về hủy đặt vé và hoàn trả tiền
-              </a>
-            </div>
-            <div className="h-[20px]">
-              <a className="page-footer__link" href="#" target="_blank">
-                Chính sách bảo mật thông tin
-              </a>
-            </div>
+            <h2 className="page-footer__title mb-4 sm:mb-5">QUY ĐỊNH</h2>
+            <AnchorTag>{"Chính sách và quy định chung"}</AnchorTag>
+            <AnchorTag>{"Chính sách cộng tác viên"}</AnchorTag>
+            <AnchorTag>{"Quy định thanh toán"}</AnchorTag>
+            <AnchorTag>{"Quy định về xác định thông tin đặt vé"}</AnchorTag>
+            <AnchorTag>{"Chính sách về hủy đặt vé và hoàn trả tiền"}</AnchorTag>
+            <AnchorTag>{"Chính sách bảo mật thông tin"}</AnchorTag>
           </div>
-          <div>
+          <div className="flex flex-col">
             <h2 className="page-footer__title">ĐĂNG KÝ CỘNG TÁC VIÊN NGAY</h2>
-            <a href="#" target="_blank">
+            <a href="#" target="_blank" className="self-center">
               <img src="./images/chart.png" className="w-[200px]" />
             </a>
           </div>
         </div>
       </section>
       <section className=" bg-orange text-white text-lg">
-        <div className="container flex items-center justify-start gap-32 pt-4 pb-1">
+        <div className="container-wrap flex items-center justify-around sm:justify-start sm:gap-16 md:gap-24 lg:gap-32 pt-4 pb-1">
           <h2> 2020 © Baydidau.vn</h2>
           <a
             href="#"

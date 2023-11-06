@@ -14,7 +14,7 @@
 }
 
 @layer components {
-  .container {
-    @apply w-[calc(100%-200px)]  mx-auto;
+  .container-wrap {
+    @apply w-[calc(100%-20px)] sm:w-[calc(100%-60px)] md:w-[calc(100%-100px)] lg:w-[calc(100%-200px)]   mx-auto;
   }
 }

@@ -23,6 +23,7 @@ module.exports = {
         "dark-green": "#214252",
         "light-blue": "#8cbfd8",
         pink: "#fd5056",
+        red1: "#dc3545",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
